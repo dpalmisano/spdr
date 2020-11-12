@@ -9,8 +9,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -33,7 +33,7 @@ def get_stack():
 
 
 def test_constructor(get_stack):
-    assert get_stack.contains(initial_user_id) == True
+    assert get_stack.contains(initial_user_id) is True
 
 
 def test_pop(get_stack):
@@ -43,15 +43,15 @@ def test_pop(get_stack):
 
 def test_push(get_stack):
     new_user_id = "new_user_id"
-    assert get_stack.contains(new_user_id) == False
+    assert get_stack.contains(new_user_id) is False
     get_stack.push(new_user_id)
-    assert get_stack.contains(new_user_id) == True
+    assert get_stack.contains(new_user_id) is True
 
 
 def test_is_candidate(get_stack):
     new_user_id = "new_user_id"
-    assert get_stack.is_candidate(new_user_id) == True
+    assert get_stack.is_candidate(new_user_id) is True
     get_stack.push(new_user_id)
-    assert get_stack.is_candidate(new_user_id) == False
+    assert get_stack.is_candidate(new_user_id) is False
     get_stack.pop()
-    assert get_stack.is_candidate(new_user_id) == False
+    assert get_stack.is_candidate(new_user_id) is False

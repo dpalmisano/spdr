@@ -9,8 +9,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -18,6 +18,7 @@
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 import requests
 import time
@@ -45,7 +46,7 @@ class Fetcher:
         }
 
     def __build_url(self, user_id, cursor):
-        return f"{Fetcher.baseUrl}?user_id={user_id}&count=5000&stringify_ids=true&cursor={cursor}"
+        return f"{Fetcher.baseUrl}?user_id={user_id}&count=5000&stringify_ids=true&cursor={cursor}"  # noqa
 
     def fetch(self, user_id):
         cursor = -1
@@ -68,7 +69,8 @@ class Fetcher:
                 time.sleep(seconds_until_retry)
             else:
                 raise Exception(
-                    f"Error while getting users followed by {user_id} with status code {status_code}"
+                    f"""Error while getting users followed by {user_id}
+                        with status code {status_code}"""
                 )
 
         return users

@@ -9,8 +9,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,7 +24,6 @@ import pytest
 from pytest import raises
 from unittest.mock import patch, call
 
-import json
 import time
 
 from spdr.fetcher import Fetcher, PrivateUserException
@@ -50,7 +49,11 @@ class MockResponse:
 
 
 def build_url(user_id, cursor):
-    return f"{baseUrl}?user_id={user_id}&count=5000&stringify_ids=true&cursor={cursor}"
+    # fmt: off
+    return (
+        f"{baseUrl}?user_id={user_id}&count=5000&stringify_ids=true&cursor={cursor}" # noqa
+    )
+    # fmt: on
 
 
 @pytest.fixture
@@ -67,7 +70,9 @@ def test_build_url(mock_requests_get, fetcher):
 
     expected_url = build_url("user-id", -1)
 
-    mock_requests_get.assert_called_once_with(expected_url, headers=expected_headers)
+    mock_requests_get.assert_called_once_with(
+        expected_url, headers=expected_headers
+    )  # noqa
     assert actual_users == ["user-1", "user-2"]
 
 
@@ -98,6 +103,7 @@ def test_handle_private_user(mock_requests_get, fetcher):
     with raises(PrivateUserException) as pue:
         actual_users = fetcher.fetch("user-id")
         assert pue.user_id == "user-id"
+        assert actual_users == ["user-1", "user-2"]
 
 
 @patch("time.sleep")

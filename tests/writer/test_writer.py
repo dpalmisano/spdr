@@ -1,5 +1,3 @@
-# MIT License
-
 # Copyright (c) 2020 Davide Palmisano
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -9,8 +7,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -40,7 +38,7 @@ def test_create_directory(mock_exists, mock_makedirs, mock_open, writer):
     expected_filepath = writer.write("user-1", [])
 
     mock_open.assert_called_once_with("/path/to/dir/prefix-user-1.out", "a+")
-    assert mock_makedirs.called == True
+    assert mock_makedirs.called is True
     assert expected_filepath == "/path/to/dir/prefix-user-1.out"
 
 
@@ -54,3 +52,5 @@ def test_call_write(mock_exists, mock_makedirs, mock_open, writer):
 
     mock_fp = mock_open.return_value.__enter__()
     mock_fp.write.assert_has_calls([call("user-2\n"), call("user-3\n")])
+
+    assert expected_filepath == "/path/to/dir/prefix-user-1.out"
