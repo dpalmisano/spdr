@@ -26,7 +26,7 @@ from unittest.mock import patch, call
 
 import time
 
-from spdr.fetcher import Fetcher, PrivateUserException
+from spdr.fetcher import Fetcher, PrivateUserException, UserNotFoundException
 
 token = "test-bearer-token"
 baseUrl = "https://api.twitter.com/1.1/friends/ids.json"
@@ -124,3 +124,14 @@ def test_handle_too_many_requests(mock_requests_get, mock_time_sleep, fetcher):
         [call(build_url("user-id", -1), headers=expected_headers)]
     )
     assert actual_users == ["user-3"]
+
+
+@patch("requests.get")
+def test_handle_user_not_found(mock_requests_get, fetcher):
+    mock_response = MockResponse(409, 0, ["user-1", "user-2"])
+    mock_requests_get.return_value = mock_response
+
+    with raises(UserNotFoundException) as pue:
+        actual_users = fetcher.fetch("user-id")
+        assert pue.user_id == "user-id"
+        assert actual_users == ["user-1", "user-2"]

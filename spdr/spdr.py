@@ -22,7 +22,7 @@
 
 from ratelimit import limits, sleep_and_retry
 
-from spdr.fetcher import PrivateUserException
+from spdr.fetcher import PrivateUserException, UserNotFoundException
 
 TIME_PERIOD = 900  # 15 minutes
 
@@ -36,6 +36,9 @@ class Spdr:
             return self.fetcher.fetch(current_id)
         except PrivateUserException as pue:
             print(f"User {pue.user_id} is private. Skipping.")
+            return None
+        except UserNotFoundException as unfe:
+            print(f"User {unfe.user_id} is private. Skipping.")
             return None
 
     def __save(self, following, current_id):

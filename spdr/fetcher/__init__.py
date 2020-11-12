@@ -22,3 +22,4 @@
 
 from .fetcher import Fetcher  # noqa
 from .fetcher import PrivateUserException  # noqa
+from .fetcher import UserNotFoundException  # noqa

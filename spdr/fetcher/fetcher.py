@@ -35,6 +35,11 @@ class PrivateUserException(FetcherException):
         self.user_id = user_id
 
 
+class UserNotFoundException(FetcherException):
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+
 class Fetcher:
 
     baseUrl = "https://api.twitter.com/1.1/friends/ids.json"
@@ -67,6 +72,8 @@ class Fetcher:
                 now = int(time.time())
                 seconds_until_retry = epoch_until_retry - now
                 time.sleep(seconds_until_retry)
+            elif status_code == 409:
+                raise UserNotFoundException(user_id)
             else:
                 raise Exception(
                     f"""Error while getting users followed by {user_id}
